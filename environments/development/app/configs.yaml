@@ -1,0 +1,1 @@
+database_url: postgresql+psycopg://tibor@db.noterepo.internal:5432/note_repo

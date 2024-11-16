@@ -2,16 +2,25 @@ from sqlmodel import SQLModel, create_engine, Session
 from typing import Annotated
 from fastapi import FastAPI, Depends
 from contextlib import asynccontextmanager
+from note_repo.schemas.settings import AppSettings
+from functools import lru_cache
+from dotenv import load_dotenv
 
 
-postgres_url = "postgresql+psycopg://tibor:diocan@localhost:5432/note_repo"
+@lru_cache
+def get_settings():
+    return AppSettings()
 
-db_engine = create_engine(postgres_url)
+def create_engine_with_settings():
+    settings = get_settings()
+    return create_engine(str(settings.database_url))
+
+
+db_engine = create_engine_with_settings()
 
 
 def get_session():
     with Session(db_engine) as session:
-        print("Called only once?")
         yield session
 
 

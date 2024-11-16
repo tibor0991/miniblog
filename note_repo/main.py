@@ -4,6 +4,10 @@ from note_repo.dependencies import lifespan
 
 from note_repo.routes import author, note
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 app = FastAPI(lifespan=lifespan)
 
 app.include_router(author.router, prefix="/api")
