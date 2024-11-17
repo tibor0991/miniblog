@@ -5,7 +5,7 @@ from note_repo.dependencies import SessionDep
 router = APIRouter()
 
 
-@router.post("/api/authors/")
+@router.post("/authors/create/")
 def create_author(author: db.Author, session: SessionDep):
     session.add(author)
     session.commit()

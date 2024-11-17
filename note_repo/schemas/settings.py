@@ -1,14 +1,11 @@
 from pydantic_settings import (
     BaseSettings,
-    SettingsConfigDict,
     PydanticBaseSettingsSource,
-    YamlConfigSettingsSource,
-    SecretsSettingsSource
+    YamlConfigSettingsSource
 )
 from pydantic import PostgresDsn
-from typing import Tuple, Type
+from typing import Tuple
 from pathlib import Path
-from pydantic import Field
 import os
 
 MINIBLOG_CONFIGS_PATH = Path('./configs.yaml')

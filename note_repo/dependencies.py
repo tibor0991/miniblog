@@ -4,7 +4,6 @@ from fastapi import FastAPI, Depends
 from contextlib import asynccontextmanager
 from note_repo.schemas.settings import AppSettings
 from functools import lru_cache
-from dotenv import load_dotenv
 
 
 @lru_cache

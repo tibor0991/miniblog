@@ -13,7 +13,7 @@ class Author(SQLModel, table=True):
 class Note(SQLModel, table=True):
     __tablename__ = "notes"
     note_id: int = Field(primary_key=True)
-    author_id: int
+    author_id: int = Field(foreign_key="authors.author_id")
     title: str
     content: str
     creation_date: datetime

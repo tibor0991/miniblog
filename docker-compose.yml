@@ -6,14 +6,16 @@ services:
       dockerfile: Dockerfile
     image: note-repo:latest
     volumes:
-      - ${ENVIRONMENT}/app/configs.yaml:/app/configs/configs.yaml
-      - ${ENVIRONMENT}/app/.pgpass:/app/.pgpass
+      - ${ENVIRONMENT}/app/configs.yaml:/app/configs/configs.yaml:ro
+      - ${ENVIRONMENT}/app/.pgpass:/app/.pgpass:ro
     environment:
       - MINIBLOG_CONFIGS_PATH=/app/configs/configs.yaml
+      - PGPASSFILE=/app/.pgpass
     ports:
       - 8000:8000
     restart: always
     entrypoint: uvicorn --host 0.0.0.0 --port 8000 note_repo.main:app
+    # entrypoint: bash
 
   database:
     hostname: db.noterepo.internal
@@ -22,9 +24,11 @@ services:
       - POSTGRES_USER=tibor
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=note_repo
+    ports:
+      - 5432:5432
     volumes:
       - db-storage:/var/lib/postgresql/data
-      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ${ENVIRONMENT}/database/init.sql:/docker-entrypoint-initdb.d/init.sql
     restart: always
 
 volumes:
